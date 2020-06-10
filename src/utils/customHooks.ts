@@ -45,7 +45,9 @@ export function useFetch(url: string): [any, boolean] {
         const resp = await fetch(url);
         const data_ = await resp.json();
         setData(data_.msg);
-      } catch {}
+      } catch (error) {
+        console.log("API Error: " + error);
+      }
       setLoading(false);
     }
     fetchData();
@@ -76,7 +78,9 @@ export function usePost(url: string, args: object): [any, boolean] {
         });
         const data_ = await resp.json();
         setData(data_.msg);
-      } catch {}
+      } catch (error) {
+        console.log("API Error: " + error);
+      }
       setLoading(false);
     }
     if (checkObjectIsFilled(args)) {
