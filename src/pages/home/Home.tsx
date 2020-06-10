@@ -41,7 +41,7 @@ export default function Home(): JSX.Element {
   ] = usePost(backend.POST_COMBINATION_RATE, {
     champion,
     role,
-    buddyRole,
+    buddyRole: buddyRole === role? "": buddyRole,
   });
 
   const screenWidth = isMobile ? width * 0.9 : width * 0.5;
@@ -71,6 +71,7 @@ export default function Home(): JSX.Element {
           justify="space-between"
           alignItems="center"
           className={classes.form}
+          spacing={2}
         >
           <Grid item>
             <Grid
