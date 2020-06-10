@@ -1,6 +1,6 @@
 const DOMAIN =
   process.env.NODE_ENV === "production"
-    ? "https://buddy-champ-jj-backend.herokuapp.com"
+    ? "https://buddy-champ-jj-backend.herokuapp.com/"
     : "http://127.0.0.1:8000/";
 console.log("Using domain: " + DOMAIN);
 export const GET_CHAMPION_LIST = DOMAIN + "api/get-champions";
