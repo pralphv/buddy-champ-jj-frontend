@@ -40,6 +40,7 @@ export function useFetch(url: string): [any, boolean] {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     async function fetchData() {
+      console.log(`Fetching ${url}`)
       setLoading(true);
       try {
         const resp = await fetch(url);
@@ -66,6 +67,7 @@ export function usePost(url: string, args: object): [any, boolean] {
   const argsToPreventRendering = JSON.stringify(args);
   useEffect(() => {
     async function fetchData() {
+      console.log(`Fetching ${url}`)
       setLoading(true);
       try {
         const resp = await fetch(url, {

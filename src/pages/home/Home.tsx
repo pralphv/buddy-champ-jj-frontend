@@ -55,7 +55,7 @@ export default function Home(): JSX.Element {
           color="textSecondary"
           style={{ fontSize: "0.75em" }}
         >
-          Game Version: {gameVersion}
+          Game Version: {gameVersion?.split("-").join(".")}
         </Typography>
         <Typography
           align="right"
