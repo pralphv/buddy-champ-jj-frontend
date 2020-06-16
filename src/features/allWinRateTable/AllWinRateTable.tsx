@@ -9,6 +9,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
+import HelpIcon from "@material-ui/icons/Help";
+
 import { usePost } from "utils/customHooks";
 import * as backend from "api/endPoints";
 import { AllWinRateInterface } from "api/types";
@@ -23,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
   textPadding: {
     paddingRight: theme.spacing(1),
   },
+  icon:{
+    fontSize: "0.75em",
+    color: theme.palette.text.secondary
+  }
+
 }));
 
 interface FormatObjectType {
@@ -69,7 +77,15 @@ export default function AllWinRateTable(): JSX.Element {
                 />
               </TableCell>
               <TableCell align="right">Win Rate</TableCell>
-              <TableCell align="right">Games</TableCell>
+              <TableCell align="right">
+                Games
+                <sup>
+
+                <Tooltip title="200 games is minimum">
+                  <HelpIcon className={classes.icon}/>
+                </Tooltip>
+                </sup>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
