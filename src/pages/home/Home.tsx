@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 
+import CaptionText from "features/captionText/CaptionText";
 import LoadingScreen from "features/loadingScreen/LoadingScreen";
 import ChampionSuggest from "features/championSuggest/ChampionSuggest";
 import WinRateTable from "features/winRateTable/WinRateTable";
+import AllWinRateTable from "features/allWinRateTable/AllWinRateTable";
 import RoleSelect from "features/roleSelect/RoleSelect";
 import * as backend from "api/endPoints";
 import * as apiTypes from "api/types";
@@ -29,8 +31,11 @@ export default function Home(): JSX.Element {
   const [data, loading]: [string[], boolean] = useFetch(
     backend.GET_CHAMPION_LIST
   );
-  const [gameVersion, gameVersionloading]: [string, boolean] = useFetch(
+  const [gameVersion, gameVersionLoading]: [string, boolean] = useFetch(
     backend.GET_GAME_VERSION
+  );
+  const [gameCount, gameCountLoading]: [string, boolean] = useFetch(
+    backend.GET_GAME_COUNT
   );
   const [champion, setChampion] = useState<string>("");
   const [role, setRole] = useState<string>("");
@@ -41,75 +46,83 @@ export default function Home(): JSX.Element {
   ] = usePost(backend.POST_COMBINATION_RATE, {
     champion,
     role,
-    buddyRole: buddyRole === role? "": buddyRole,
+    buddyRole: buddyRole === role ? "" : buddyRole,
   });
 
   const screenWidth = isMobile ? width * 0.9 : width * 0.5;
+  const rightTableWidth = isMobile ? Math.max(width, 400)  : Math.min(width * 0.4, 500);
   return (
-    <div className={classes.root} style={{ width: screenWidth }}>
-      <LoadingScreen open={loading || resultsLoading || gameVersionloading} />
+    <div className={classes.root}>
+      <LoadingScreen
+        open={
+          loading || resultsLoading || gameVersionLoading || gameCountLoading
+        }
+      />
       <div>
-      <Typography
-          align="right"
-          variant="body2"
-          color="textSecondary"
-          style={{ fontSize: "0.75em" }}
-        >
+        <CaptionText>
           Game Version: {gameVersion?.split("-").join(".")}
-        </Typography>
-        <Typography
-          align="right"
-          variant="body2"
-          color="textSecondary"
-          style={{ fontSize: "0.75em" }}
-        >
-          Region: Taiwan
-        </Typography>
+        </CaptionText>
+        <CaptionText>Region: Taiwan</CaptionText>
+        <CaptionText>No. of games: {gameCount}</CaptionText>
+        <br />
         <Grid
           container
           direction="row"
-          justify="space-between"
-          alignItems="center"
-          className={classes.form}
-          spacing={2}
+          justify="center"
+          spacing={10}
         >
           <Grid item>
             <Grid
               container
               direction="row"
+              justify="space-between"
               alignItems="center"
-              spacing={1}
-              className={classes.root}
+              className={classes.form}
+              spacing={2}
+              style={{ width: screenWidth }}
             >
-              <Grid item xs={9}>
-                <ChampionSuggest
-                  options={data || []}
-                  champion={champion}
-                  setChampion={setChampion}
-                />
+              <Grid item>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  spacing={1}
+                  className={classes.root}
+                >
+                  <Grid item xs={9}>
+                    <ChampionSuggest
+                      options={data || []}
+                      champion={champion}
+                      setChampion={setChampion}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <RoleSelect
+                      roles={ROLES}
+                      role={role}
+                      setRole={setRole}
+                      label="Role"
+                      disabled={false}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item>
                 <RoleSelect
-                  roles={ROLES}
-                  role={role}
-                  setRole={setRole}
-                  label="Role"
-                  disabled={false}
+                  roles={ROLES.filter((role_: string) => role_ !== role)}
+                  role={buddyRole}
+                  setRole={setBuddyRole}
+                  label="Buddy"
+                  disabled={role === ""}
                 />
               </Grid>
             </Grid>
+            <WinRateTable data={results || []} />
           </Grid>
-          <Grid item>
-            <RoleSelect
-              roles={ROLES.filter((role_: string) => role_ !== role)}
-              role={buddyRole}
-              setRole={setBuddyRole}
-              label="Buddy"
-              disabled={role === ""}
-            />
+          <Grid item style={{width: rightTableWidth}} >
+            <AllWinRateTable />
           </Grid>
         </Grid>
-        <WinRateTable data={results || []} />
       </div>
     </div>
   );

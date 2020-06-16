@@ -17,7 +17,7 @@ interface WinRateTableProps {
 }
 
 export default function WinRateTable({ data }: WinRateTableProps): JSX.Element {
-  const [minGames, setMinGames] = React.useState<number>(120);
+  const [minGames, setMinGames] = React.useState<number>(200);
   data = data.filter((obj: WinRateInterface) => obj.total >= minGames);
   return (
     <div>
@@ -39,12 +39,11 @@ export default function WinRateTable({ data }: WinRateTableProps): JSX.Element {
             <TableRow>
               <TableCell></TableCell>
               <TableCell align="right">Win Rate</TableCell>
-              <TableCell align="right">No. of Games</TableCell>
+              <TableCell align="right">Games</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data
-              .slice(Math.max(data.length - 10, 1))
               .map((obj: WinRateInterface, i: number) => (
                 <TableRow hover tabIndex={-1} key={i}>
                   <TableCell component="th" scope="row">
