@@ -62,7 +62,7 @@ function checkObjectIsFilled(obj: object): boolean {
 }
 
 export function usePost(url: string, args: object): [any, boolean] {
-  const [data, setData] = useState<Object>();
+  const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const argsToPreventRendering = JSON.stringify(args);
   useEffect(() => {

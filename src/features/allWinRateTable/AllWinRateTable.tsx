@@ -61,6 +61,7 @@ export default function AllWinRateTable(): JSX.Element {
       combination,
     }
   );
+  console.log(data)
 
   return (
     <div>
@@ -89,7 +90,7 @@ export default function AllWinRateTable(): JSX.Element {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data &&
+            {data && data.length > 0 &&
               data.map((obj: AllWinRateInterface, i: number) => (
                 <TableRow hover tabIndex={-1} key={i}>
                   <TableCell component="th" scope="row">
