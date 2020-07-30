@@ -50,7 +50,6 @@ export default function Home(): JSX.Element {
   });
 
   const screenWidth = isMobile ? width * 0.9 : width * 0.5;
-  const rightTableWidth = isMobile ? Math.max(width, 400)  : Math.min(width * 0.4, 500);
   return (
     <div className={classes.root}>
       <LoadingScreen
@@ -69,7 +68,7 @@ export default function Home(): JSX.Element {
           container
           direction="row"
           justify="center"
-          spacing={10}
+          spacing={isMobile ? 0 : 10}
         >
           <Grid item>
             <Grid
@@ -119,7 +118,7 @@ export default function Home(): JSX.Element {
             </Grid>
             <WinRateTable data={results || []} />
           </Grid>
-          <Grid item style={{width: rightTableWidth}} >
+          <Grid item style={{paddingTop: 50}}> 
             <AllWinRateTable />
           </Grid>
         </Grid>

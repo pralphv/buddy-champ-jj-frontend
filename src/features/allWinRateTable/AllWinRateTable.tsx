@@ -21,16 +21,14 @@ import CombinationSelect from "features/combinationSelect/CombinationSelect";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
   },
   textPadding: {
     paddingRight: theme.spacing(1),
   },
-  icon:{
+  icon: {
     fontSize: "0.75em",
-    color: theme.palette.text.secondary
-  }
-
+    color: theme.palette.text.secondary,
+  },
 }));
 
 interface FormatObjectType {
@@ -61,8 +59,6 @@ export default function AllWinRateTable(): JSX.Element {
       combination,
     }
   );
-  console.log(data)
-
   return (
     <div>
       <LoadingScreen open={loadingData} />
@@ -81,16 +77,16 @@ export default function AllWinRateTable(): JSX.Element {
               <TableCell align="right">
                 Games
                 <sup>
-
-                <Tooltip title="200 games is minimum">
-                  <HelpIcon className={classes.icon}/>
-                </Tooltip>
+                  <Tooltip title="200 games is minimum">
+                    <HelpIcon className={classes.icon} />
+                  </Tooltip>
                 </sup>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.length > 0 &&
+            {data &&
+              data.length > 0 &&
               data.map((obj: AllWinRateInterface, i: number) => (
                 <TableRow hover tabIndex={-1} key={i}>
                   <TableCell component="th" scope="row">
